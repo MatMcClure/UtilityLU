@@ -1,5 +1,5 @@
-#App {
-  color: black;
+body {
+  background-color: black;
 }
 
 body {
@@ -15,6 +15,14 @@ body {
   align-items: center;
   justify-content: center;
   gap: 20px;
+}
+
+.map-title {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .main-image {
