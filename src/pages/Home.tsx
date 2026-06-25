@@ -9,64 +9,70 @@ import ancient from "../images/ancient.jpg";
 import overpass from "../images/overpass.jpg";
 import cache from "../images/cache.jpeg";
 
-const images = [
-  dust2,
-  mirage,
-  nuke,
-  ancient,
-  inferno,
-  overpass,
-  anubis,
-  cache,
+const maps = [
+  { name: "Dust II", image: dust2 },
+  { name: "Mirage", image: mirage },
+  { name: "Nuke", image: nuke },
+  { name: "Ancient", image: ancient },
+  { name: "Inferno", image: inferno },
+  { name: "Overpass", image: overpass },
+  { name: "Anubis", image: anubis },
+  { name: "Cache", image: cache },
 ];
 
 function Home() {
   const [currentImage, setCurrentImage] = useState(0);
 
   const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % images.length);
+    setCurrentImage((prev) => (prev + 1) % maps.length);
   };
 
   const previousImage = () => {
     setCurrentImage((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
+      prev === 0 ? maps.length - 1 : prev - 1
     );
   };
 
   const previousIndex =
-    currentImage === 0 ? images.length - 1 : currentImage - 1;
+    currentImage === 0 ? maps.length - 1 : currentImage - 1;
 
   const nextIndex =
-    currentImage === images.length - 1 ? 0 : currentImage + 1;
+    currentImage === maps.length - 1 ? 0 : currentImage + 1;
 
   return (
     <main className="home">
-      <div className="carousel">
-        <button className="arrow left" onClick={previousImage}>
-          &#10094;
-        </button>
+      <div className="carousel-container">
+        <h1 className="map-title">
+          {maps[currentImage]?.name}
+        </h1>
 
-        <img
-          src={images[previousIndex]}
-          alt="Previous Map"
-          className="side-image"
-        />
+        <div className="carousel">
+          <button className="arrow left" onClick={previousImage}>
+            &#10094;
+          </button>
 
-        <img
-          src={images[currentImage]}
-          alt="Current Map"
-          className="main-image"
-        />
+          <img
+            src={maps[previousIndex]?.image}
+            alt={maps[previousIndex]?.name}
+            className="side-image"
+          />
 
-        <img
-          src={images[nextIndex]}
-          alt="Next Map"
-          className="side-image"
-        />
+          <img
+            src={maps[currentImage]?.image}
+            alt={maps[currentImage]?.name}
+            className="main-image"
+          />
 
-        <button className="arrow right" onClick={nextImage}>
-          &#10095;
-        </button>
+          <img
+            src={maps[nextIndex]?.image}
+            alt={maps[nextIndex]?.name}
+            className="side-image"
+          />
+
+          <button className="arrow right" onClick={nextImage}>
+            &#10095;
+          </button>
+        </div>
       </div>
     </main>
   );
