@@ -1,27 +1,29 @@
 import { useState } from "react";
 import "../styles/Home.css";
-import mirage from "../images/mirage.jpg";
-import inferno from "../images/inferno.jpg";
-import nuke from "../images/nuke.jpg";
-import dust2 from "../images/dust2.jpg";
-import anubis from "../images/anubis.jpg";
-import ancient from "../images/ancient.jpg";
-import overpass from "../images/overpass.jpg";
-import cache from "../images/cache.jpeg";
+import mirage from "../images/maps/mirage.jpg";
+import inferno from "../images/maps/inferno.jpg";
+import nuke from "../images/maps/nuke.jpg";
+import dust2 from "../images/maps/dust2.jpg";
+import anubis from "../images/maps/anubis.jpg";
+import ancient from "../images/maps/ancient.jpg";
+import overpass from "../images/maps/overpass.jpg";
+import cache from "../images/maps/cache.jpeg";
 
 const maps = [
-  { name: "Dust II", image: dust2 },
-  { name: "Mirage", image: mirage },
-  { name: "Nuke", image: nuke },
-  { name: "Ancient", image: ancient },
-  { name: "Inferno", image: inferno },
-  { name: "Overpass", image: overpass },
-  { name: "Anubis", image: anubis },
-  { name: "Cache", image: cache },
+  { id: "dust2", name: "Dust II", image: dust2 },
+  { id: "mirage", name: "Mirage", image: mirage },
+  { id: "nuke", name: "Nuke", image: nuke },
+  { id: "ancient", name: "Ancient", image: ancient },
+  { id: "inferno", name: "Inferno", image: inferno },
+  { id: "overpass", name: "Overpass", image: overpass },
+  { id: "anubis", name: "Anubis", image: anubis },
+  { id: "cache", name: "Cache", image: cache },
 ];
 
 function Home() {
   const [currentImage, setCurrentImage] = useState(0);
+
+  const [selectedMap, setSelectedMap] = useState<string | null>(null);
 
   const nextImage = () => {
     setCurrentImage((prev) => (prev + 1) % maps.length);
@@ -61,6 +63,7 @@ function Home() {
             src={maps[currentImage]?.image}
             alt={maps[currentImage]?.name}
             className="main-image"
+            onClick={() => setSelectedMap(maps[currentImage]!.id)}
           />
 
           <img
