@@ -8,6 +8,7 @@ import anubis from "../images/maps/anubis.jpg";
 import ancient from "../images/maps/ancient.jpg";
 import overpass from "../images/maps/overpass.jpg";
 import cache from "../images/maps/cache.jpeg";
+import { useNavigate } from "react-router-dom";
 
 const maps = [
   { id: "dust2", name: "Dust II", image: dust2 },
