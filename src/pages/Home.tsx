@@ -8,7 +8,6 @@ import anubis from "../images/maps/anubis.jpg";
 import ancient from "../images/maps/ancient.jpg";
 import overpass from "../images/maps/overpass.jpg";
 import cache from "../images/maps/cache.jpeg";
-import { useNavigate } from "react-router-dom";
 
 const maps = [
   { id: "dust2", name: "Dust II", image: dust2 },
@@ -21,19 +20,19 @@ const maps = [
   { id: "cache", name: "Cache", image: cache },
 ];
 
-function Home() {
-  const [currentImage, setCurrentImage] = useState(0);
+interface HomeProps {
+  onSelectMap: (mapId: string) => void;
+}
 
-  const [selectedMap, setSelectedMap] = useState<string | null>(null);
+function Home({ onSelectMap }: HomeProps) {
+  const [currentImage, setCurrentImage] = useState(0);
 
   const nextImage = () => {
     setCurrentImage((prev) => (prev + 1) % maps.length);
   };
 
   const previousImage = () => {
-    setCurrentImage((prev) =>
-      prev === 0 ? maps.length - 1 : prev - 1
-    );
+    setCurrentImage((prev) => (prev === 0 ? maps.length - 1 : prev - 1));
   };
 
   const previousIndex =
@@ -42,12 +41,14 @@ function Home() {
   const nextIndex =
     currentImage === maps.length - 1 ? 0 : currentImage + 1;
 
+  const currentMap = maps[currentImage]!;
+  const previousMap = maps[previousIndex]!;
+  const nextMap = maps[nextIndex]!;
+
   return (
     <main className="home">
       <div className="carousel-container">
-        <h1 className="map-title">
-          {maps[currentImage]?.name}
-        </h1>
+        <h1 className="map-title">{currentMap.name}</h1>
 
         <div className="carousel">
           <button className="arrow left" onClick={previousImage}>
@@ -55,21 +56,21 @@ function Home() {
           </button>
 
           <img
-            src={maps[previousIndex]?.image}
-            alt={maps[previousIndex]?.name}
+            src={previousMap.image}
+            alt={previousMap.name}
             className="side-image"
           />
 
           <img
-            src={maps[currentImage]?.image}
-            alt={maps[currentImage]?.name}
+            src={currentMap.image}
+            alt={currentMap.name}
             className="main-image"
-            onClick={() => setSelectedMap(maps[currentImage]!.id)}
+            onClick={() => onSelectMap(currentMap.id)}
           />
 
           <img
-            src={maps[nextIndex]?.image}
-            alt={maps[nextIndex]?.name}
+            src={nextMap.image}
+            alt={nextMap.name}
             className="side-image"
           />
 
