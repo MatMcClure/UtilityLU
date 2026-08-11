@@ -1,24 +1,6 @@
 import { useState } from "react";
 import "../styles/Home.css";
-import mirage from "../images/maps/mirage.jpg";
-import inferno from "../images/maps/inferno.jpg";
-import nuke from "../images/maps/nuke.jpg";
-import dust2 from "../images/maps/dust2.jpg";
-import anubis from "../images/maps/anubis.jpg";
-import ancient from "../images/maps/ancient.jpg";
-import overpass from "../images/maps/overpass.jpg";
-import cache from "../images/maps/cache.jpeg";
-
-const maps = [
-  { id: "dust2", name: "Dust II", image: dust2 },
-  { id: "mirage", name: "Mirage", image: mirage },
-  { id: "nuke", name: "Nuke", image: nuke },
-  { id: "ancient", name: "Ancient", image: ancient },
-  { id: "inferno", name: "Inferno", image: inferno },
-  { id: "overpass", name: "Overpass", image: overpass },
-  { id: "anubis", name: "Anubis", image: anubis },
-  { id: "cache", name: "Cache", image: cache },
-];
+import { maps } from "../data/maps";
 
 interface HomeProps {
   onSelectMap: (mapId: string) => void;
@@ -51,7 +33,7 @@ function Home({ onSelectMap }: HomeProps) {
         <h1 className="map-title">{currentMap.name}</h1>
 
         <div className="carousel">
-          <button className="arrow left" onClick={previousImage}>
+          <button className="arrow left" onClick={previousImage} aria-label="Previous map">
             &#10094;
           </button>
 
@@ -59,6 +41,7 @@ function Home({ onSelectMap }: HomeProps) {
             src={previousMap.image}
             alt={previousMap.name}
             className="side-image"
+            onClick={previousImage}
           />
 
           <img
@@ -72,12 +55,15 @@ function Home({ onSelectMap }: HomeProps) {
             src={nextMap.image}
             alt={nextMap.name}
             className="side-image"
+            onClick={nextImage}
           />
 
-          <button className="arrow right" onClick={nextImage}>
+          <button className="arrow right" onClick={nextImage} aria-label="Next map">
             &#10095;
           </button>
         </div>
+
+        <p className="carousel-hint">Click the center map to view smoke lineups</p>
       </div>
     </main>
   );
