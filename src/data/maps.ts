@@ -51,10 +51,100 @@ export const maps: MapData[] = [
       },
     ],
   },
-  { id: "nuke", name: "Nuke", image: nuke, lineups: [] },
-  { id: "ancient", name: "Ancient", image: ancient, lineups: [] },
-  { id: "inferno", name: "Inferno", image: inferno, lineups: [] },
-  { id: "overpass", name: "Overpass", image: overpass, lineups: [] },
-  { id: "anubis", name: "Anubis", image: anubis, lineups: [] },
-  { id: "cache", name: "Cache", image: cache, lineups: [] },
+  {
+    id: "nuke",
+    name: "Nuke",
+    image: nuke,
+    lineups: [
+      {
+        id: "nuke-outdoor-smoke",
+        title: "",
+        side: "T",
+        nadeType: "Smoke",
+        image: nuke,
+        description:
+          "",
+      },
+    ],
+  },
+    {
+    id: "ancient",
+    name: "Ancient",
+    image: ancient,
+    lineups: [
+      {
+        id: "",
+        title: "",
+        side: "T",
+        nadeType: "Smoke",
+        image: ancient,
+        description:
+          "",
+      },
+    ],
+  },
+    {
+    id: "inferno",
+    name: "Inferno",
+    image: inferno,
+    lineups: [
+      {
+        id: "",
+        title: "",
+        side: "T",
+        nadeType: "Smoke",
+        image: inferno,
+        description:
+          "",
+      },
+    ],
+  },
+    {
+    id: "overpass",
+    name: "Overpass",
+    image: overpass,
+    lineups: [
+      {
+        id: "",
+        title: "",
+        side: "T",
+        nadeType: "Smoke",
+        image: overpass,
+        description:
+          "",
+      },
+    ],
+  },
+    {
+    id: "anubis",
+    name: "Anubis",
+    image: anubis,
+    lineups: [
+      {
+        id: "",
+        title: "",
+        side: "T",
+        nadeType: "Smoke",
+        image: anubis,
+        description:
+          "",
+      },
+    ],
+  },
+    {
+    id: "cache",
+    name: "Cache",
+    image: cache,
+    lineups: [
+      {
+        id: "",
+        title: "",
+        side: "T",
+        nadeType: "Smoke",
+        image: cache,
+        description:
+          "",
+      },
+    ],
+  },
 ];
