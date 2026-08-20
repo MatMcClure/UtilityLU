@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "../styles/Home.css";
 import { maps } from "../data/maps";
 
@@ -8,6 +8,7 @@ interface HomeProps {
 
 function Home({ onSelectMap }: HomeProps) {
   const [currentImage, setCurrentImage] = useState(0);
+  const isScrolling = useRef(false);
 
   const nextImage = () => {
     setCurrentImage((prev) => (prev + 1) % maps.length);
@@ -15,6 +16,24 @@ function Home({ onSelectMap }: HomeProps) {
 
   const previousImage = () => {
     setCurrentImage((prev) => (prev === 0 ? maps.length - 1 : prev - 1));
+  };
+
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    e.preventDefault();
+
+    if (isScrolling.current) return; // ignore extra scroll ticks mid-gesture
+    isScrolling.current = true;
+
+    if (e.deltaY > 0) {
+      nextImage();
+    } else if (e.deltaY < 0) {
+      previousImage();
+    }
+
+    // lock out further scroll-triggered changes briefly
+    setTimeout(() => {
+      isScrolling.current = false;
+    }, 400);
   };
 
   const previousIndex =
@@ -29,7 +48,7 @@ function Home({ onSelectMap }: HomeProps) {
 
   return (
     <main className="home">
-      <div className="carousel-container">
+      <div className="carousel-container" onWheel={handleWheel}>
         <h1 className="map-title">{currentMap.name}</h1>
 
         <div className="carousel">
@@ -63,7 +82,7 @@ function Home({ onSelectMap }: HomeProps) {
           </button>
         </div>
 
-        <p className="carousel-hint">Click the center map to view smoke lineups</p>
+        <p className="carousel-hint">Scroll or click the arrows to browse · click the center map to view lineups</p>
       </div>
     </main>
   );
