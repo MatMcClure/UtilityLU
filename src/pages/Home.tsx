@@ -1,27 +1,30 @@
-import { useState, useRef } from "react";
 import "../styles/Home.css";
+import { useRef } from "react";
 import { maps } from "../data/maps";
 
 interface HomeProps {
   onSelectMap: (mapId: string) => void;
+  currentImageIndex: number;
+  onImageIndexChange: (index: number) => void;
 }
 
-function Home({ onSelectMap }: HomeProps) {
-  const [currentImage, setCurrentImage] = useState(0);
+function Home({ onSelectMap, currentImageIndex, onImageIndexChange }: HomeProps) {
   const isScrolling = useRef(false);
 
   const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % maps.length);
+    onImageIndexChange((currentImageIndex + 1) % maps.length);
   };
 
   const previousImage = () => {
-    setCurrentImage((prev) => (prev === 0 ? maps.length - 1 : prev - 1));
+    onImageIndexChange(
+      currentImageIndex === 0 ? maps.length - 1 : currentImageIndex - 1
+    );
   };
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault();
 
-    if (isScrolling.current) return; // ignore extra scroll ticks mid-gesture
+    if (isScrolling.current) return;
     isScrolling.current = true;
 
     if (e.deltaY > 0) {
@@ -30,19 +33,18 @@ function Home({ onSelectMap }: HomeProps) {
       previousImage();
     }
 
-    // lock out further scroll-triggered changes briefly
     setTimeout(() => {
       isScrolling.current = false;
     }, 400);
   };
 
   const previousIndex =
-    currentImage === 0 ? maps.length - 1 : currentImage - 1;
+    currentImageIndex === 0 ? maps.length - 1 : currentImageIndex - 1;
 
   const nextIndex =
-    currentImage === maps.length - 1 ? 0 : currentImage + 1;
+    currentImageIndex === maps.length - 1 ? 0 : currentImageIndex + 1;
 
-  const currentMap = maps[currentImage]!;
+  const currentMap = maps[currentImageIndex]!;
   const previousMap = maps[previousIndex]!;
   const nextMap = maps[nextIndex]!;
 
