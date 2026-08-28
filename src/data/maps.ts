@@ -2,6 +2,9 @@ import mirage from "../images/maps/mirage.jpg";
 import inferno from "../images/maps/inferno.jpg";
 import nuke from "../images/maps/nuke.jpg";
 import dust2 from "../images/maps/dust2.jpg";
+import dust2Spawn from "../images/maps/dust2_spawn.jpg";
+import dust2A from "../images/maps/dust2_a.jpg";
+import dust2B from "../images/maps/dust2_b.jpg";
 import anubis from "../images/maps/anubis.jpg";
 import ancient from "../images/maps/ancient.jpg";
 import overpass from "../images/maps/overpass.jpg";
@@ -17,10 +20,37 @@ export const maps: MapData[] = [
     lineups: [
       {
         id: "dust2-long-smoke",
+        title: "Suicide Mid Door Smoke",
+        side: "T",
+        nadeType: "Smoke",
+        image: dust2Spawn, // swap for an actual lineup screenshot
+        description:
+          "",
+      },
+      {
+        id: "dust2-long-smoke",
+        title: "Barrell Mid Door Smoke",
+        side: "T",
+        nadeType: "Smoke",
+        image: dust2Spawn, // swap for an actual lineup screenshot
+        description:
+          "",
+      },
+      {
+        id: "dust2-long-smoke",
         title: "Long Corner Smoke from T Spawn",
         side: "T",
         nadeType: "Smoke",
-        image: dust2, // swap for an actual lineup screenshot
+        image: dust2Spawn, // swap for an actual lineup screenshot
+        description:
+          "",
+      },
+      {
+        id: "dust2-long-smoke",
+        title: "Long Corner Smoke from T Spawn",
+        side: "T",
+        nadeType: "Smoke",
+        image: dust2Spawn, // swap for an actual lineup screenshot
         description:
           "Stand at the edge of T spawn facing the long doors sign. Line up the crosshair with the tip of the sign and throw.",
       },
@@ -29,9 +59,27 @@ export const maps: MapData[] = [
         title: "CT Xbox Smoke",
         side: "T",
         nadeType: "Smoke",
-        image: dust2,
+        image: dust2Spawn,
         description:
           "From mid, align with the antenna on the building, jump-throw to land the smoke on Xbox.",
+      },
+      {
+        id: "dust2-b-smoke",
+        title: "Door Smoke",
+        side: "T",
+        nadeType: "Smoke",
+        image: dust2B,
+        description:
+          "",
+      },
+      {
+        id: "dust2-b-smoke",
+        title: "Window Smoke",
+        side: "T",
+        nadeType: "Smoke",
+        image: dust2B,
+        description:
+          "",
       },
     ],
   },
