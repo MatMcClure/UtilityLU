@@ -8,9 +8,13 @@ interface MapPageProps {
   onBack: () => void;
 }
 
+type NadeFilter = "All" | "Smoke" | "Molotov" | "Flash";
+type SideFilter = "All" | "T" | "CT";
+
 function MapPage({ mapId, onBack }: MapPageProps) {
   const map = maps.find((m) => m.id === mapId);
-  const [filter, setFilter] = useState<"All" | "T" | "CT">("All");
+  const [nadeFilter, setNadeFilter] = useState<NadeFilter>("All");
+  const [sideFilter, setSideFilter] = useState<SideFilter>("All");
 
   if (!map) {
     return (
@@ -21,10 +25,18 @@ function MapPage({ mapId, onBack }: MapPageProps) {
     );
   }
 
-  const filteredLineups: Lineup[] =
-    filter === "All"
-      ? map.lineups
-      : map.lineups.filter((l) => l.side === filter);
+  const filteredLineups: Lineup[] = map.lineups.filter((lineup) => {
+    const matchesNade = nadeFilter === "All" || lineup.nadeType === nadeFilter;
+    const matchesSide = sideFilter === "All" || lineup.side === sideFilter;
+    return matchesNade && matchesSide;
+  });
+
+  const nadeTabs: { label: NadeFilter; icon: string }[] = [
+    { label: "All", icon: "🗺️" },
+    { label: "Smoke", icon: "💨" },
+    { label: "Molotov", icon: "🔥" },
+    { label: "Flash", icon: "⚡" }
+  ];
 
   return (
     <main className="map-page">
@@ -32,15 +44,28 @@ function MapPage({ mapId, onBack }: MapPageProps) {
         <button className="back-button" onClick={onBack}>
           &larr; Back to maps
         </button>
-        <h1>{map.name} — Smoke Lineups</h1>
+        <h1>{map.name} — Lineups</h1>
       </header>
+
+      <nav className="nade-navbar">
+        {nadeTabs.map((tab) => (
+          <button
+            key={tab.label}
+            className={`nade-tab ${nadeFilter === tab.label ? "active" : ""}`}
+            onClick={() => setNadeFilter(tab.label)}
+          >
+            <span className="nade-icon">{tab.icon}</span>
+            {tab.label}
+          </button>
+        ))}
+      </nav>
 
       <div className="filter-bar">
         {(["All", "T", "CT"] as const).map((side) => (
           <button
             key={side}
-            className={`filter-button ${filter === side ? "active" : ""}`}
-            onClick={() => setFilter(side)}
+            className={`filter-button ${sideFilter === side ? "active" : ""}`}
+            onClick={() => setSideFilter(side)}
           >
             {side}
           </button>
@@ -48,7 +73,7 @@ function MapPage({ mapId, onBack }: MapPageProps) {
       </div>
 
       {filteredLineups.length === 0 ? (
-        <p className="no-lineups">No lineups added for this map yet.</p>
+        <p className="no-lineups">No lineups match this filter yet.</p>
       ) : (
         <div className="lineup-grid">
           {filteredLineups.map((lineup) => (
