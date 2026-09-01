@@ -20,7 +20,6 @@ function MapPage({ mapId, onBack }: MapPageProps) {
     return (
       <main className="map-page">
         <p>Map not found.</p>
-        <button onClick={onBack}>&larr; Back</button>
       </main>
     );
   }
@@ -41,9 +40,6 @@ function MapPage({ mapId, onBack }: MapPageProps) {
   return (
     <main className="map-page">
       <header className="map-page-header">
-        <button className="back-button" onClick={onBack}>
-          &larr; Back to maps
-        </button>
         <h1>{map.name} — Lineups</h1>
       </header>
 
