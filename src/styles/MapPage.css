@@ -134,3 +134,83 @@
 .nade-icon {
   font-size: 1.1rem;
 }
+
+.search-bar {
+  position: relative;
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: white;
+  padding: 10px 36px 10px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: #777;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #e63946;
+}
+
+.clear-search {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.clear-search:hover {
+  color: white;
+}
+
+.lineup-card {
+  position: relative; /* needed so the save button can be absolutely positioned */
+}
+
+.save-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #999;
+  font-size: 1.4rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.save-button:hover {
+  transform: scale(1.1);
+}
+
+.save-button.saved {
+  color: #f4c542;
+}
+
+.map-tag {
+  display: inline-block;
+  color: #888;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
