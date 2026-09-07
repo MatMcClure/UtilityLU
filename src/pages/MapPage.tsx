@@ -2,19 +2,21 @@ import { useState } from "react";
 import "../styles/MapPage.css";
 import { maps } from "../data/maps";
 import type { Lineup } from "../types";
+import { useSavedLineups } from "../hooks/useSavedLineups";
 
 interface MapPageProps {
   mapId: string;
-  onBack: () => void;
 }
 
-type NadeFilter = "All" | "Smoke" | "Molotov" | "Flash";
+type NadeFilter = "All" | "Smoke" | "Flash" | "Molotov" | "HE";
 type SideFilter = "All" | "T" | "CT";
 
-function MapPage({ mapId, onBack }: MapPageProps) {
+function MapPage({ mapId }: MapPageProps) {
   const map = maps.find((m) => m.id === mapId);
   const [nadeFilter, setNadeFilter] = useState<NadeFilter>("All");
   const [sideFilter, setSideFilter] = useState<SideFilter>("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const { isSaved, toggleSaved } = useSavedLineups();
 
   if (!map) {
     return (
@@ -27,14 +29,18 @@ function MapPage({ mapId, onBack }: MapPageProps) {
   const filteredLineups: Lineup[] = map.lineups.filter((lineup) => {
     const matchesNade = nadeFilter === "All" || lineup.nadeType === nadeFilter;
     const matchesSide = sideFilter === "All" || lineup.side === sideFilter;
-    return matchesNade && matchesSide;
+    const matchesSearch = lineup.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase().trim());
+    return matchesNade && matchesSide && matchesSearch;
   });
 
   const nadeTabs: { label: NadeFilter; icon: string }[] = [
     { label: "All", icon: "🗺️" },
     { label: "Smoke", icon: "💨" },
+    { label: "Flash", icon: "⚡" },
     { label: "Molotov", icon: "🔥" },
-    { label: "Flash", icon: "⚡" }
+    { label: "HE", icon: "💥" },
   ];
 
   return (
@@ -42,6 +48,25 @@ function MapPage({ mapId, onBack }: MapPageProps) {
       <header className="map-page-header">
         <h1>{map.name} — Lineups</h1>
       </header>
+
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search lineups by title..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="search-input"
+        />
+        {searchQuery && (
+          <button
+            className="clear-search"
+            onClick={() => setSearchQuery("")}
+            aria-label="Clear search"
+          >
+            &times;
+          </button>
+        )}
+      </div>
 
       <nav className="nade-navbar">
         {nadeTabs.map((tab) => (
@@ -69,12 +94,19 @@ function MapPage({ mapId, onBack }: MapPageProps) {
       </div>
 
       {filteredLineups.length === 0 ? (
-        <p className="no-lineups">No lineups match this filter yet.</p>
+        <p className="no-lineups">No lineups match your search/filter.</p>
       ) : (
         <div className="lineup-grid">
           {filteredLineups.map((lineup) => (
             <div key={lineup.id} className="lineup-card">
               <img src={lineup.image} alt={lineup.title} className="lineup-image" />
+              <button
+                className={`save-button ${isSaved(lineup.id) ? "saved" : ""}`}
+                onClick={() => toggleSaved(lineup.id)}
+                aria-label={isSaved(lineup.id) ? "Remove from saved" : "Save lineup"}
+              >
+                {isSaved(lineup.id) ? "★" : "☆"}
+              </button>
               <div className="lineup-info">
                 <span className={`badge ${lineup.side.toLowerCase()}`}>
                   {lineup.side} · {lineup.nadeType}

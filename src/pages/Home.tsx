@@ -4,11 +4,17 @@ import { maps } from "../data/maps";
 
 interface HomeProps {
   onSelectMap: (mapId: string) => void;
+  onViewSaved: () => void;
   currentImageIndex: number;
   onImageIndexChange: (index: number) => void;
 }
 
-function Home({ onSelectMap, currentImageIndex, onImageIndexChange }: HomeProps) {
+function Home({
+  onSelectMap,
+  onViewSaved,
+  currentImageIndex,
+  onImageIndexChange,
+}: HomeProps) {
   const isScrolling = useRef(false);
 
   const nextImage = () => {
@@ -51,6 +57,12 @@ function Home({ onSelectMap, currentImageIndex, onImageIndexChange }: HomeProps)
   return (
     <main className="home">
       <div className="carousel-container" onWheel={handleWheel}>
+        <div className="home-header">
+          <button className="saved-link" onClick={onViewSaved}>
+            ★ Saved Lineups
+          </button>
+        </div>
+
         <h1 className="map-title">{currentMap.name}</h1>
 
         <div className="carousel">
