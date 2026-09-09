@@ -1,6 +1,7 @@
 import "../styles/Home.css";
 import { useRef } from "react";
 import { maps } from "../data/maps";
+import ThemeSwitcher from "../components/ThemeSwitcher";
 
 interface HomeProps {
   onSelectMap: (mapId: string) => void;
@@ -58,6 +59,7 @@ function Home({
     <main className="home">
       <div className="carousel-container" onWheel={handleWheel}>
         <div className="home-header">
+          <ThemeSwitcher />
           <button className="saved-link" onClick={onViewSaved}>
             ★ Saved Lineups
           </button>
