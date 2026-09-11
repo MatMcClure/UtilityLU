@@ -1,0 +1,14 @@
+.theme-switcher {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.theme-switcher:focus {
+  outline: none;
+  border-color: var(--accent);
+}
