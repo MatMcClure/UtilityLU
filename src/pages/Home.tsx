@@ -1,7 +1,7 @@
 import "../styles/Home.css";
 import { useRef } from "react";
 import { maps } from "../data/maps";
-import ThemeSwitcher from "../components/ThemeSwitcher";
+import TopBar from "../components/TopBar";
 
 interface HomeProps {
   onSelectMap: (mapId: string) => void;
@@ -57,14 +57,9 @@ function Home({
 
   return (
     <main className="home">
-      <div className="carousel-container" onWheel={handleWheel}>
-        <div className="home-header">
-          <ThemeSwitcher />
-          <button className="saved-link" onClick={onViewSaved}>
-            ★ Saved Lineups
-          </button>
-        </div>
+      <TopBar onViewSaved={onViewSaved} />
 
+      <div className="carousel-container" onWheel={handleWheel}>
         <h1 className="map-title">{currentMap.name}</h1>
 
         <div className="carousel">
