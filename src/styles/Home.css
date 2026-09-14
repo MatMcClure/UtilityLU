@@ -1,14 +1,17 @@
-body {
-  background-color: #0f0f0f;
-  color: white;
-  margin: 0;
-}
-
 .home {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+}
+
+.home-header {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .carousel-container {
@@ -25,7 +28,7 @@ body {
 }
 
 .map-title {
-  color: white;
+  color: var(--text-primary);
   text-align: center;
   margin-bottom: 20px;
   font-size: 2rem;
@@ -61,7 +64,7 @@ body {
 }
 
 .carousel-hint {
-  color: #999;
+  color: var(--text-muted);
   margin-top: 16px;
   font-size: 0.9rem;
 }
@@ -93,16 +96,10 @@ body {
   right: -60px;
 }
 
-.home-header {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
 .saved-link {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #444;
-  color: #f4c542;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--accent-gold);
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -110,5 +107,5 @@ body {
 }
 
 .saved-link:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: var(--bg-tertiary);
 }
