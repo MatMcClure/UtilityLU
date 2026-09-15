@@ -1,13 +1,95 @@
 .map-page {
   min-height: 100vh;
-  background-color: #0f0f0f;
-  color: white;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   padding: 40px;
   box-sizing: border-box;
 }
 
 .map-page-header {
   margin-bottom: 24px;
+}
+
+.search-bar {
+  position: relative;
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 36px 10px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.clear-search {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.clear-search:hover {
+  color: var(--text-primary);
+}
+
+.nade-navbar {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.nade-tab {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nade-tab:hover {
+  color: var(--text-primary);
+}
+
+.nade-tab.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
+}
+
+.nade-icon {
+  font-size: 1.1rem;
 }
 
 .filter-bar {
@@ -17,22 +99,22 @@
 }
 
 .filter-button {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #ccc;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
   padding: 8px 20px;
   border-radius: 8px;
   cursor: pointer;
 }
 
 .filter-button.active {
-  background: #e63946;
+  background: var(--accent);
   color: white;
-  border-color: #e63946;
+  border-color: var(--accent);
 }
 
 .no-lineups {
-  color: #777;
+  color: var(--text-muted);
 }
 
 .lineup-grid {
@@ -42,10 +124,11 @@
 }
 
 .lineup-card {
-  background: #1a1a1a;
+  position: relative;
+  background: var(--bg-secondary);
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #2a2a2a;
+  border: 1px solid var(--border-color);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -53,7 +136,6 @@
   transform: scale(1.04);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
   z-index: 2;
-  position: relative;
 }
 
 .lineup-image {
@@ -73,10 +155,11 @@
 
 .lineup-info h3 {
   margin: 8px 0;
+  color: var(--text-primary);
 }
 
 .lineup-info p {
-  color: #bbb;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.4;
 }
@@ -98,91 +181,6 @@
   background: #4a90d9;
   color: #1a1a1a;
 }
-.nade-navbar {
-  display: flex;
-  gap: 8px;
-  border-bottom: 1px solid #2a2a2a;
-  margin-bottom: 20px;
-  overflow-x: auto;
-}
-
-.nade-tab {
-  background: none;
-  border: none;
-  color: #999;
-  padding: 12px 20px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  border-bottom: 3px solid transparent;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.nade-tab:hover {
-  color: white;
-}
-
-.nade-tab.active {
-  color: white;
-  border-bottom-color: #e63946;
-}
-
-.nade-icon {
-  font-size: 1.1rem;
-}
-
-.search-bar {
-  position: relative;
-  margin-bottom: 20px;
-  max-width: 400px;
-}
-
-.search-input {
-  width: 100%;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: white;
-  padding: 10px 36px 10px 14px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease;
-}
-
-.search-input::placeholder {
-  color: #777;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: #e63946;
-}
-
-.clear-search {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #999;
-  font-size: 1.3rem;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0;
-}
-
-.clear-search:hover {
-  color: white;
-}
-
-.lineup-card {
-  position: relative; /* needed so the save button can be absolutely positioned */
-}
 
 .save-button {
   position: absolute;
@@ -190,7 +188,7 @@
   right: 8px;
   background: rgba(0, 0, 0, 0.6);
   border: none;
-  color: #999;
+  color: var(--text-muted);
   font-size: 1.4rem;
   width: 36px;
   height: 36px;
@@ -205,12 +203,12 @@
 }
 
 .save-button.saved {
-  color: #f4c542;
+  color: var(--accent-gold);
 }
 
 .map-tag {
   display: inline-block;
-  color: #888;
+  color: var(--text-muted);
   font-size: 0.8rem;
   margin-bottom: 4px;
 }
