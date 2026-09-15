@@ -3,15 +3,17 @@ import "../styles/MapPage.css";
 import { maps } from "../data/maps";
 import type { Lineup } from "../types";
 import { useSavedLineups } from "../hooks/useSavedLineups";
+import TopBar from "../components/TopBar";
 
 interface MapPageProps {
   mapId: string;
+  onViewSaved: () => void;
 }
 
 type NadeFilter = "All" | "Smoke" | "Flash" | "Molotov" | "HE";
 type SideFilter = "All" | "T" | "CT";
 
-function MapPage({ mapId }: MapPageProps) {
+function MapPage({ mapId, onViewSaved }: MapPageProps) {
   const map = maps.find((m) => m.id === mapId);
   const [nadeFilter, setNadeFilter] = useState<NadeFilter>("All");
   const [sideFilter, setSideFilter] = useState<SideFilter>("All");
@@ -21,6 +23,7 @@ function MapPage({ mapId }: MapPageProps) {
   if (!map) {
     return (
       <main className="map-page">
+        <TopBar onViewSaved={onViewSaved} />
         <p>Map not found.</p>
       </main>
     );
@@ -45,6 +48,8 @@ function MapPage({ mapId }: MapPageProps) {
 
   return (
     <main className="map-page">
+      <TopBar onViewSaved={onViewSaved} />
+
       <header className="map-page-header">
         <h1>{map.name} — Lineups</h1>
       </header>
