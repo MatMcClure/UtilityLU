@@ -4,6 +4,7 @@ import { maps } from "../data/maps";
 import type { Lineup } from "../types";
 import { useSavedLineups } from "../hooks/useSavedLineups";
 import TopBar from "../components/TopBar";
+import LineupModal from "../components/LineupModal";
 
 interface MapPageProps {
   mapId: string;
@@ -18,6 +19,7 @@ function MapPage({ mapId, onViewSaved }: MapPageProps) {
   const [nadeFilter, setNadeFilter] = useState<NadeFilter>("All");
   const [sideFilter, setSideFilter] = useState<SideFilter>("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedLineup, setSelectedLineup] = useState<Lineup | null>(null);
   const { isSaved, toggleSaved } = useSavedLineups();
 
   if (!map) {
@@ -44,6 +46,7 @@ function MapPage({ mapId, onViewSaved }: MapPageProps) {
     { label: "Flash", icon: "⚡" },
     { label: "Molotov", icon: "🔥" },
     { label: "HE", icon: "💥" },
+    { label: "Combo Nades: "}
   ];
 
   return (
@@ -51,7 +54,7 @@ function MapPage({ mapId, onViewSaved }: MapPageProps) {
       <TopBar onViewSaved={onViewSaved} />
 
       <header className="map-page-header">
-        <h1>{map.name} — Lineups</h1>
+        <h1>{map.name} Lineups</h1>
       </header>
 
       <div className="search-bar">
@@ -103,11 +106,18 @@ function MapPage({ mapId, onViewSaved }: MapPageProps) {
       ) : (
         <div className="lineup-grid">
           {filteredLineups.map((lineup) => (
-            <div key={lineup.id} className="lineup-card">
+            <div
+              key={lineup.id}
+              className="lineup-card"
+              onClick={() => setSelectedLineup(lineup)}
+            >
               <img src={lineup.image} alt={lineup.title} className="lineup-image" />
               <button
                 className={`save-button ${isSaved(lineup.id) ? "saved" : ""}`}
-                onClick={() => toggleSaved(lineup.id)}
+                onClick={(e) => {
+                  e.stopPropagation(); // don't open the modal when starring
+                  toggleSaved(lineup.id);
+                }}
                 aria-label={isSaved(lineup.id) ? "Remove from saved" : "Save lineup"}
               >
                 {isSaved(lineup.id) ? "★" : "☆"}
@@ -122,6 +132,13 @@ function MapPage({ mapId, onViewSaved }: MapPageProps) {
             </div>
           ))}
         </div>
+      )}
+
+      {selectedLineup && (
+        <LineupModal
+          lineup={selectedLineup}
+          onClose={() => setSelectedLineup(null)}
+        />
       )}
     </main>
   );
