@@ -1,4 +1,10 @@
 import mirage from "../images/maps/mirage.jpg";
+import miragets from "../images/maps/miragets.jpg"
+import mirageinsta1v from "../videos/maps/mirageinsta1.mp4";
+import mirageinsta1c from "../images/maps/mirageinsta1c.jpg";
+import mirageinsta2v from "../videos/maps/mirageinsta2.mov";
+import mirageinsta2c from "../images/maps/mirageinsta2c.jpg";
+import miragewindowsmoked from "../images/maps/miragewindowsmoked.jpg";
 import inferno from "../images/maps/inferno.jpg";
 import nuke from "../images/maps/nuke.jpg";
 import dust2 from "../images/maps/dust2.jpg";
@@ -88,6 +94,28 @@ export const maps: MapData[] = [
     name: "Mirage",
     image: mirage,
     lineups: [
+      {
+        id: "mirage-window-smoke-pos1",
+        title: "Mirage Insta Window Smoke 1",
+        side: "T",
+        nadeType: "Smoke",
+        image: miragets,
+        video: mirageinsta1v,
+        detailImages: [mirageinsta1c, miragewindowsmoked],
+        description:
+          "W + Jumpthrow",
+      },
+      {
+        id: "mirage-window-smoke-pos2",
+        title: "Mirage Insta Window Smoke 2",
+        side: "T",
+        nadeType: "Smoke",
+        image: miragets,
+        video: mirageinsta2v,
+        detailImages: [mirageinsta2c, miragewindowsmoked],
+        description:
+          "W + Jumpthrow",
+      },
       {
         id: "mirage-jungle-smoke",
         title: "Jungle Smoke from T Ramp",
