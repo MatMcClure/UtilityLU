@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import MapPage from "./pages/MapPage";
-import SavedLineupsPage from "./pages/SavedLineups";
+import SavedLineups from "./pages/SavedLineups";
 import { ThemeProvider } from "./context/ThemeContext";
 import { maps } from "./data/maps";
 
-type View = { page: "home" } | { page: "map"; mapId: string } | { page: "saved" };
+type View =
+  | { page: "home" }
+  | { page: "map"; mapId: string; lineupId?: string }
+  | { page: "saved" };
 
 function getViewFromPath(pathname: string): View {
   if (pathname === "/saved") {
@@ -30,8 +33,6 @@ function App() {
   );
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Sync the initial history entry to match the URL actually loaded,
-  // without adding a new entry (replaceState, not pushState).
   useEffect(() => {
     window.history.replaceState({ view }, "", window.location.pathname);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -50,6 +51,12 @@ function App() {
     window.history.pushState({ view: newView }, "", `/maps/${mapId}`);
   };
 
+  const goToLineup = (mapId: string, lineupId: string) => {
+    const newView: View = { page: "map", mapId, lineupId };
+    setView(newView);
+    window.history.pushState({ view: newView }, "", `/maps/${mapId}`);
+  };
+
   const goToSaved = () => {
     const newView: View = { page: "saved" };
     setView(newView);
@@ -59,12 +66,18 @@ function App() {
   return (
     <ThemeProvider>
       {view.page === "map" ? (
-        <MapPage mapId={view.mapId} onViewSaved={goToSaved} />
+        <MapPage
+          mapId={view.mapId}
+          initialLineupId={view.lineupId}
+          onViewSaved={goToSaved}
+          onSelectLineup={goToLineup}
+        />
       ) : view.page === "saved" ? (
-        <SavedLineupsPage />
+        <SavedLineups />
       ) : (
         <Home
           onSelectMap={goToMap}
+          onSelectLineup={goToLineup}
           onViewSaved={goToSaved}
           currentImageIndex={currentImageIndex}
           onImageIndexChange={setCurrentImageIndex}
