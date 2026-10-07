@@ -2,7 +2,7 @@
   min-height: 100vh;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  padding: 40px;
+  padding: 80px 40px 40px 300px;
   box-sizing: border-box;
 }
 
