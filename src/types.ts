@@ -1,10 +1,12 @@
 export interface Lineup {
   id: string;
-  title: string;          // e.g. "A Site Smoke from T Spawn"
+  title: string;
   side: "T" | "CT";
   nadeType: "Smoke" | "Flash" | "Molotov" | "HE";
-  image: string;           // screenshot of the lineup position
-  description: string;     // throw instructions
+  image: string;
+  description: string;
+  video?: string;
+  detailImages?: string[];
 }
 
 export interface MapData {
@@ -12,4 +14,9 @@ export interface MapData {
   name: string;
   image: string;
   lineups: Lineup[];
+}
+
+export interface LineupSearchResult extends Lineup {
+  mapId: string;
+  mapName: string;
 }
