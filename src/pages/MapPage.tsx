@@ -1,26 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/MapPage.css";
 import { maps } from "../data/maps";
 import type { Lineup } from "../types";
 import { useSavedLineups } from "../hooks/useSavedLineups";
 import TopBar from "../components/TopBar";
+import Sidebar from "../components/Sidebar";
 import LineupModal from "../components/LineupModal";
 
 interface MapPageProps {
   mapId: string;
+  initialLineupId?: string;
   onViewSaved: () => void;
+  onSelectLineup: (mapId: string, lineupId: string) => void;
 }
 
-type NadeFilter = "All" | "Smoke" | "Flash" | "Molotov" | "HE" | "Combo Nades";
+type NadeFilter = "All" | "Smoke" | "Flash" | "Molotov" | "HE";
 type SideFilter = "All" | "T" | "CT";
 
-function MapPage({ mapId, onViewSaved }: MapPageProps) {
+function MapPage({ mapId, initialLineupId, onViewSaved, onSelectLineup }: MapPageProps) {
   const map = maps.find((m) => m.id === mapId);
   const [nadeFilter, setNadeFilter] = useState<NadeFilter>("All");
   const [sideFilter, setSideFilter] = useState<SideFilter>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLineup, setSelectedLineup] = useState<Lineup | null>(null);
   const { isSaved, toggleSaved } = useSavedLineups();
+
+  // If we arrived here via sidebar search with a specific lineup targeted,
+  // open that lineup's modal automatically.
+  useEffect(() => {
+    if (initialLineupId && map) {
+      const target = map.lineups.find((l) => l.id === initialLineupId);
+      if (target) {
+        setSelectedLineup(target);
+      }
+    }
+  }, [initialLineupId, map]);
 
   if (!map) {
     return (
@@ -46,15 +60,15 @@ function MapPage({ mapId, onViewSaved }: MapPageProps) {
     { label: "Flash", icon: "⚡" },
     { label: "Molotov", icon: "🔥" },
     { label: "HE", icon: "💥" },
-    { label: "Combo Nades", icon: ""}
   ];
 
   return (
     <main className="map-page">
+      <Sidebar onSelectLineup={onSelectLineup} />
       <TopBar onViewSaved={onViewSaved} />
 
       <header className="map-page-header">
-        <h1>{map.name} Lineups</h1>
+        <h1>{map.name} — Lineups</h1>
       </header>
 
       <div className="search-bar">
@@ -115,7 +129,7 @@ function MapPage({ mapId, onViewSaved }: MapPageProps) {
               <button
                 className={`save-button ${isSaved(lineup.id) ? "saved" : ""}`}
                 onClick={(e) => {
-                  e.stopPropagation(); // don't open the modal when starring
+                  e.stopPropagation();
                   toggleSaved(lineup.id);
                 }}
                 aria-label={isSaved(lineup.id) ? "Remove from saved" : "Save lineup"}
