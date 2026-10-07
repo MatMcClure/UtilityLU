@@ -11,7 +11,7 @@ interface MapPageProps {
   onViewSaved: () => void;
 }
 
-type NadeFilter = "All" | "Smoke" | "Flash" | "Molotov" | "HE";
+type NadeFilter = "All" | "Smoke" | "Flash" | "Molotov" | "HE" | "Combo Nades";
 type SideFilter = "All" | "T" | "CT";
 
 function MapPage({ mapId, onViewSaved }: MapPageProps) {
@@ -46,7 +46,7 @@ function MapPage({ mapId, onViewSaved }: MapPageProps) {
     { label: "Flash", icon: "⚡" },
     { label: "Molotov", icon: "🔥" },
     { label: "HE", icon: "💥" },
-    { label: "Combo Nades: "}
+    { label: "Combo Nades", icon: ""}
   ];
 
   return (
