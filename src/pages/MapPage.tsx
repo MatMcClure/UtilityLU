@@ -54,6 +54,29 @@ function MapPage({ mapId, initialLineupId, onViewSaved, onSelectLineup }: MapPag
     return matchesNade && matchesSide && matchesSearch;
   });
 
+  // ⬇️ paste the new navigation block here
+  const navList = selectedLineup && filteredLineups.some((l) => l.id === selectedLineup.id)
+    ? filteredLineups
+    : map.lineups;
+
+  const selectedIndex = selectedLineup
+    ? navList.findIndex((l) => l.id === selectedLineup.id)
+    : -1;
+
+  const canNavigate = navList.length > 1 && selectedIndex !== -1;
+
+  const showPreviousLineup = () => {
+    if (!canNavigate) return;
+    const prev = selectedIndex === 0 ? navList.length - 1 : selectedIndex - 1;
+    setSelectedLineup(navList[prev]!);
+  };
+
+  const showNextLineup = () => {
+    if (!canNavigate) return;
+    const next = (selectedIndex + 1) % navList.length;
+    setSelectedLineup(navList[next]!);
+  };
+
   const nadeTabs: { label: NadeFilter; icon: string }[] = [
     { label: "All", icon: "🗺️" },
     { label: "Smoke", icon: "💨" },
@@ -152,6 +175,8 @@ function MapPage({ mapId, initialLineupId, onViewSaved, onSelectLineup }: MapPag
         <LineupModal
           lineup={selectedLineup}
           onClose={() => setSelectedLineup(null)}
+          onPrevious={canNavigate ? showPreviousLineup : undefined}
+          onNext={canNavigate ? showNextLineup : undefined}
         />
       )}
     </main>
