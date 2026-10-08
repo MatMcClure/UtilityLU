@@ -5,28 +5,52 @@ import "../styles/LineupModal.css";
 interface LineupModalProps {
   lineup: Lineup;
   onClose: () => void;
+  onPrevious?: (() => void) | undefined;
+  onNext?: (() => void) | undefined;
 }
 
-function LineupModal({ lineup, onClose }: LineupModalProps) {
+function LineupModal({ lineup, onClose, onPrevious, onNext }: LineupModalProps) {
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
+
+  // Reset any open zoom when switching to a different lineup
+  useEffect(() => {
+    setZoomedImage(null);
+  }, [lineup.id]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (zoomedImage) {
-          setZoomedImage(null); // close zoom first, not the whole modal
+          setZoomedImage(null);
         } else {
           onClose();
         }
+      } else if (!zoomedImage && e.key === "ArrowLeft") {
+        onPrevious?.();
+      } else if (!zoomedImage && e.key === "ArrowRight") {
+        onNext?.();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose, zoomedImage]);
+  }, [onClose, onPrevious, onNext, zoomedImage]);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
+      {onPrevious && (
+        <button
+          className="modal-arrow modal-arrow-left"
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrevious();
+          }}
+          aria-label="Previous lineup"
+        >
+          &#10094;
+        </button>
+      )}
+
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose} aria-label="Close">
           &times;
@@ -42,6 +66,7 @@ function LineupModal({ lineup, onClose }: LineupModalProps) {
 
         {lineup.video ? (
           <video
+            key={lineup.id}
             className="modal-video"
             src={lineup.video}
             controls
@@ -72,6 +97,19 @@ function LineupModal({ lineup, onClose }: LineupModalProps) {
         )}
       </div>
 
+      {onNext && (
+        <button
+          className="modal-arrow modal-arrow-right"
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          aria-label="Next lineup"
+        >
+          &#10095;
+        </button>
+      )}
+
       {zoomedImage && (
         <div
           className="zoom-overlay"
@@ -80,7 +118,7 @@ function LineupModal({ lineup, onClose }: LineupModalProps) {
             setZoomedImage(null);
           }}
         >
-          <img src={zoomedImage} alt="Zoomed crosshair reference" className="zoomed-image" />
+          <img src={zoomedImage} alt="Zoomed reference" className="zoomed-image" />
           <button
             className="zoom-close"
             onClick={(e) => {
