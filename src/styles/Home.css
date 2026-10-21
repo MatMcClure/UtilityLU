@@ -109,3 +109,12 @@
 .saved-link:hover {
   background: var(--bg-tertiary);
 }
+
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding-left: 260px; /* matches sidebar width */
+  box-sizing: border-box;
+}
